@@ -1,9 +1,13 @@
 <?php
+$dotenv = parse_ini_file(__DIR__ . '/.env');
+if ($dotenv === false) {
+    die("Error al leer archivo .env");
+}
 
-$host = $_ENV['DB_HOST'];
-$dbname = $_ENV['DB_NAME'];
-$user = $_ENV['DB_USER'];
-$pass = $_ENV['DB_PASS'];
+$host = $dotenv['DB_HOST'];
+$dbname = $dotenv['DB_NAME'];
+$user = $dotenv['DB_USER'];
+$pass = $dotenv['DB_PASS'];
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
@@ -11,4 +15,3 @@ try {
 } catch (PDOException $e) {
     die("Error de conexión: " . $e->getMessage());
 }
-?>
